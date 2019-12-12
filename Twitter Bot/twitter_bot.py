@@ -33,9 +33,17 @@ class twitter_bot:
         bot.get('https://twitter.com/search?q='+str(hashtag)+'&src=typed_query')
 
         for i in range(0,30):
-            print("pyautogui.click(pyautogui.locateCenterOnScreen('twitter_heart.JPG'))")
-            pyautogui.click(pyautogui.locateCenterOnScreen('twitter_heart.JPG'))
 
+            print('Window Scrolling')
+            bot.execute_script('window.scrollTo(0, document.body.scrollHeight)')
+
+            print('sleeping.')
+            time.sleep(1)
+            print('sleeping..')
+            time.sleep(1)
+
+            print('pyautogui ...')
+            pyautogui.click(pyautogui.locateCenterOnScreen('1.png'), duration=2)
 
             print('sleeping.')
             time.sleep(1)
@@ -44,15 +52,7 @@ class twitter_bot:
             print('sleeping...')
             time.sleep(1)
 
-            print("bot.execute_script('window.scrollTo(0, document.body.scrollHeight)')")
 
-            bot.execute_script('window.scrollTo(0, document.body.scrollHeight)')
-
-
-            print('sleeping.')
-            time.sleep(1)
-            print('sleeping..')
-            time.sleep(1)
 
 window = Tk()
 window.geometry("700x600")
