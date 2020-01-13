@@ -5,37 +5,6 @@ import requests
 app = Flask(__name__)
 
 
-
-def getLinksYoutube(search_text):
-    page = 1
-    max_page =2
-
-    url = "https://www.youtube.com/results?search_query="+str(search_text)+"&sp=EgIYAQ%253D%253D"
-
-    source_code = requests.get(url)
-
-    plain_tex = source_code.text
-
-    soup = BeautifulSoup(plain_tex)
-
-    links = []
-
-    for link in soup.findAll('a',{'id': 'video-title'}):
-        href = link.get('href')
-        links.append(href)
-
-    return str(links)
-
-    #while page < max_page:
-
-
-
-
-
-
-
-
-
 @app.route("/", methods=['GET','POST'])
 def index():
     if request.method == 'POST':
@@ -48,6 +17,31 @@ def index():
 @app.route('/multi/<int:num>', methods=['GET'])
 def get_multiply10(num):
     return jsonify({'result' : num*10})
+
+
+@app.route('/YT/<search_text>', methods=['GET'])
+def getLinksYoutube(search_text):
+    page = 1
+    max_page =2
+
+    url = "https://m.youtube.com/results?search_query="+str(search_text)
+
+    source_code = requests.get(url)
+    plain_text = source_code.text
+
+    soup = BeautifulSoup(plain_text)
+    #print(plain_text)
+    allLinks = []
+    i = 0
+    for link in soup.findAll('a',{'class': 'yt-uix-sessionlink'}): #,{'id': 'yt-uix-sessionlink'}
+        href = link.get('href')
+        if(href[0:6] == '/watch'):
+            #print(href)
+            allLinks.append("https://www.youtube.com"+href)
+            i+=1
+
+    #print(i)
+    return jsonify({"links" : allLinks, "total": str(i)})
 
 if __name__ == '__main__':
     app.run(debug=True)
