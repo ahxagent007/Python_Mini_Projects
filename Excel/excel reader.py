@@ -15,8 +15,16 @@ workSheet2 = workbook2.sheet_by_index(0)
 
 same = 0
 nope = 0
+
+yeslist = []
+mainlis = []
+
+
+for j in range(1,workSheet1.nrows):
+    mainlis.append('#{0} SAME : {1}'.format(j,workSheet1.cell(j, 0).value))
+
 for k in range(1, workSheet2.nrows):
-    for j in range(k,workSheet1.nrows):
+    for j in range(1,workSheet1.nrows):
 
         str112 = workSheet1.cell(j, 0).value
         str700 = workSheet2.cell(k, 0).value
@@ -25,11 +33,18 @@ for k in range(1, workSheet2.nrows):
         s2 = re.sub(r"\s+", "", str700)
 
         if(s1 == s2):
-            print('#{0} SAME : {1} == {2}'.format(j,str112,str700))
+            #print('#{0} SAME : {1}'.format(j,str112,str700))
+            yeslist.append('#{0} SAME : {1}'.format(j,str112,str700))
             same += 1
-        #else:
+
+        else:
             #print('#{0} NOPE : {1}'.format(j,str112))
-            #nope += 1
+            nope += 1
+
+nolis = result = set(mainlis) - set(yeslist)
+
+for n in nolis:
+    print(n)
 
 print('SAME = {0} NOPE = {1}'.format(same,nope))
 
