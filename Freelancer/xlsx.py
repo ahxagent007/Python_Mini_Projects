@@ -15,7 +15,6 @@ outputWorkbook = Workbook()
 outputSheet = outputWorkbook.active
 #outputSheet = outputWorkbook.create_sheet('output')
 
-
 outputRowList = []
 
 for sh in sheets:
